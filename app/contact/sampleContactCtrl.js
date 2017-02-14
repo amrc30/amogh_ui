@@ -24,6 +24,7 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
         var arrayNum = [];
         var modArray = [];
         var finalArray = [];
+         var values=[];
         vm.users = response.data.users;
         //data for line graph
         for (var i = 0; i < vm.users.length; i++) {
@@ -78,68 +79,24 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
                     }
                 }
             }
+          
+    
+        
+         for(var key in finalObj){
+             var myObj={};
+             myObj.label=key;
+             myObj.value=finalObj[key];
+             values.push(myObj);
+         }
+
+          
+          
+          
             //data for bar graph 
             $scope.info = [
                 {
                     key: "Cumulative Return",
-                    values: [
-                        {
-                            "label": 'NJ',
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "AR",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": 'CA',
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "TX",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "DE",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "CO",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "WY",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "KY",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "WI",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "MT",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "OR",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "NM",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "NH",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "ND",
-                            "value": finalObj[key]
-                        }
-                    ]
+                    values: values;
                 }
             ]
 
