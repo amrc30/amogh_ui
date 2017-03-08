@@ -19,7 +19,7 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
     vm.users = [];
     
     //Getting data from the server 
-    pocRestangularService.getdata('users?api_key=ewrew@sdfd.com', function (response) {
+    pocRestangularService.getdata('users?:api_key=ewrew@sdfd.com', function (response) {
 
         var arrayNum = [];
         var modArray = [];
@@ -64,8 +64,9 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
             'ND': 701
         };                                     //areas with area codes
         var finalObj = {};
+        var values = [];
         //checking if first 3 digits is equal to area code, according updating a counter
-        for (var i = 0; i < arr2.length; i++) {
+         for (var i = 0; i < arr2.length; i++) {
             for (var key in areaCode) {
                 for (var j = 0; j < areaCode[key].length; j++) {
                     if (arr2[i] === areaCode[key][j]) {
@@ -78,73 +79,33 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
                     }
                 }
             }
+          
+    
+        
+         for(var key in finalObj){
+             var myObj={};
+             myObj.label=key;
+             myObj.value=finalObj[key];
+             values.push(myObj);
+         }
+
+          
+          
+          
             //data for bar graph 
             $scope.info = [
                 {
                     key: "Cumulative Return",
-                    values: [
-                        {
-                            "label": 'NJ',
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "AR",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": 'CA',
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "TX",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "DE",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "CO",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "WY",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "KY",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "WI",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "MT",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "OR",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "NM",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "NH",
-                            "value": finalObj[key]
-                        },
-                        {
-                            "label": "ND",
-                            "value": finalObj[key]
-                        }
-                    ]
+                    values: values
                 }
             ]
 
         }
     })
+        
+                      
+        
+    
     
     //options for line graph
     $scope.options = {
