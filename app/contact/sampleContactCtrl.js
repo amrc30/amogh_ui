@@ -19,12 +19,12 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
     vm.users = [];
     
     //Getting data from the server 
-    pocRestangularService.getdata('users?:api_key=ewrew@sdfd.com', function (response) {
+    // pocRestangularService.getdata('users?:api_key=ewrew@sdfd.com', function (response) {
 
         var arrayNum = [];
         var modArray = [];
         var finalArray = [];
-        vm.users = response.data.users;
+    //     vm.users = response.data.users;
         //data for line graph
         for (var i = 0; i < vm.users.length; i++) {
             arrayNum.push(vm.users[i].email.length);//pushing an array of number of chars in the email
@@ -101,7 +101,7 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
             ]
 
         }
-    })
+  
         
                       
         
@@ -213,18 +213,18 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
         user.last_name = vm.lastName;
         user.email = vm.email;
         user.phone = vm.phone;
-        pocRestangularService.postdata('user/add', user, function (response) {
+       
 
-            vm.users.push(response.data.user);
-        });
+            vm.users.push(user);
+      
 
         vm.reset();
     };
     //to delete all the users
     vm.delete = function () {
-        pocRestangularService.deletedata('reset', function () {
+        
             delete vm.users;
-        })
+        
     }
     // to clear the form
     vm.reset = function () {
