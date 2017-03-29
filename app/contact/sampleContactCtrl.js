@@ -1,30 +1,33 @@
 'use strict';
 
 app.controller('sampleContactCtrl', [
-    '$resource',
-    'pocRestangularService', 
+    'pocRestangularService',
+    '$http', 
     '$scope',
     sampleContactCtrl]);
 
-function sampleContactCtrl($resource, pocRestangularService, $scope) {
+function sampleContactCtrl(pocRestangularService, $http, $scope) {
     //Initializing variables
     var vm = this;
     vm.firstName = '';
     vm.lastName = '';
     vm.email = '';
     vm.phone = '';
-    vm.api_key = '';
-    var user = {};
-
+    vm.api_key = 'amogh.ui@gmail.com';
     vm.users = [];
-    
+    var user = {};
+    var finalObj = {};
+        var values = [];
+    var a=0; var b=0; var c=0; var d=0; var e=0; var f=0; var g=0; var h=0; var p=0; var j=0; var k=0; var l=0; var m=0; var n=0; var o=0;    
     //Getting data from the server 
-    // pocRestangularService.getdata('users?:api_key=ewrew@sdfd.com', function (response) {
 
-        var arrayNum = [];
+    
+        $http.get('http://hire.lcdevelopment.com/api/users?api_key='+ vm.api_key).then(function (response){
+    
+         var arrayNum = [];
         var modArray = [];
-        var finalArray = [];
-    //     vm.users = response.data.users;
+        var finalArray = [];       
+        vm.users = response.data.users;
         //data for line graph
         for (var i = 0; i < vm.users.length; i++) {
             arrayNum.push(vm.users[i].email.length);//pushing an array of number of chars in the email
@@ -37,7 +40,73 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
         //data for bar graph
         var arr1 = [];
         var arr2 = [];
-        
+         $scope.finalArr =[
+    {
+      key: "Cumulative Return",
+      values:[
+            { 
+                label:'NJ', 
+                value: a   
+            },
+            {
+                label:'AR',
+                value: b
+            },
+            {
+                label:'CA',
+                value: c
+            },
+            {
+                label:'TX',
+                value: d
+            },
+            {
+                label:'DE',
+                value: e
+            },
+            {
+                label:'CO',
+                value: f
+            },
+            {
+                label:'WY',
+                value: g
+            },
+            {
+                label:'KY',
+                value: h
+            },
+            {
+                label:'WI',
+                value: p
+            },
+            {
+                label:'MT',
+                value: j
+            },
+            {
+                label:'OR',
+                value: k
+            },
+            {
+                label:'NM',
+                value: l
+            },
+            {
+                label:'NY',
+                value: m
+            },
+            {
+                label:'NH',
+                value: n
+            },
+            {
+                label:'ND',
+                value: o
+            }
+            ]
+    }
+    ] 
 
         for (var i = 0; i < vm.users.length; i++) {
             arr1.push(vm.users[i].phone);          //pushing phone numbers to an array
@@ -63,50 +132,29 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
             'NH': 603,
             'ND': 701
         };                                     //areas with area codes
-        var finalObj = {};
-        var values = [];
+        
+        
         //checking if first 3 digits is equal to area code, according updating a counter
          for (var i = 0; i < arr2.length; i++) {
             for (var key in areaCode) {
-                for (var j = 0; j < areaCode[key].length; j++) {
-                    if (arr2[i] === areaCode[key][j]) {
-
-                        if (finalObj[key] === undefined || finalObj[key] === null) {
-                            finalObj[key] = 1
-                        } else {
-                            finalObj[key] = finalObj[key] + 1;
-                        }
-                    }
+               if (arr2[i] === areaCode[key]) {
+                   for(var j=0; j<$scope.finalArr[0].values.length; j++){
+                        if(key === $scope.finalArr[0].values[j].label)
+                        $scope.finalArr[0].values[j].value += 1;
+                        // if (finalObj[key] === undefined || finalObj[key] === null) {
+                        //     finalObj[key] = 1
+                        // } else {
+                        //     finalObj[key] = finalObj[key] + 1;
+                        // }
+                   }  
                 }
-            }
-          
-    
-        
-         for(var key in finalObj){
-             var myObj={};
-             myObj.label=key;
-             myObj.value=finalObj[key];
-             values.push(myObj);
-         }
+            }    
+        }        
 
-          
-          
-          
-            //data for bar graph 
-            $scope.info = [
-                {
-                    key: "Cumulative Return",
-                    values: values
-                }
-            ]
+     })       
+   
 
-        }
-  
-        
-                      
-        
-    
-    
+
     //options for line graph
     $scope.options = {
         chart: {
@@ -208,23 +256,23 @@ function sampleContactCtrl($resource, pocRestangularService, $scope) {
     // to post data
     vm.save = function () {
         var user = {};
+        
         user.api_key = vm.api_key;
         user.first_name = vm.firstName;
         user.last_name = vm.lastName;
         user.email = vm.email;
         user.phone = vm.phone;
-       
-
-            vm.users.push(user);
-      
-
+        $http({method: 'POST',url:'http://hire.lcdevelopment.com/api/user/add', data:user}).then( function (response) {
+            vm.users.push(response.data.user);
+        })
         vm.reset();
     };
     //to delete all the users
     vm.delete = function () {
-        
+            // $http({method: 'DELETE',url:'http://hire.lcdevelopment.com/api/reset'}).then(function (response){
+            // delete response.data.users;
             delete vm.users;
-        
+            
     }
     // to clear the form
     vm.reset = function () {
