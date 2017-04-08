@@ -16,7 +16,7 @@ app.config(function ($urlRouterProvider, $stateProvider) {
     .state('contact', {
       url: '/contact',
       templateUrl: 'contact-list.html',
-      controller: 'sampleContactCtrl as hello'
+      controller: 'sampleContactCtrl'
 
     })
 });

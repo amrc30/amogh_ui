@@ -8,13 +8,13 @@ app.controller('sampleContactCtrl', [
 
 function sampleContactCtrl(pocRestangularService, $http, $scope) {
     //Initializing variables
-    var vm = this;
-    vm.firstName = '';
-    vm.lastName = '';
-    vm.email = '';
-    vm.phone = '';
-    vm.api_key = 'amogh.ui@gmail.com';
-    vm.users = [];
+    $scope.firstName = '';
+    $scope.lastName = '';
+    $scope.email = '';
+    $scope.phone = '';
+    $scope.api_key = 'amogh.ui@gmail.com';
+    $scope.users = [];
+    $scope.graph=false;
     var user = {};
     var finalObj = {};
         var values = [];
@@ -22,15 +22,15 @@ function sampleContactCtrl(pocRestangularService, $http, $scope) {
     //Getting data from the server 
 
     
-        $http.get('http://hire.lcdevelopment.com/api/users?api_key='+ vm.api_key).then(function (response){
+        $http.get('http://hire.lcdevelopment.com/api/users?api_key='+ $scope.api_key).then(function (response){
     
          var arrayNum = [];
         var modArray = [];
         var finalArray = [];       
-        vm.users = response.data.users;
+        $scope.users = response.data.users;
         //data for line graph
-        for (var i = 0; i < vm.users.length; i++) {
-            arrayNum.push(vm.users[i].email.length);//pushing an array of number of chars in the email
+        for (var i = 0; i < $scope.users.length; i++) {
+            arrayNum.push($scope.users[i].email.length);//pushing an array of number of chars in the email
         }
         modArray = _.countBy(arrayNum, _.identity);//getting the number of users with same number of chars in the email
         for (var key in modArray) {
@@ -108,10 +108,10 @@ function sampleContactCtrl(pocRestangularService, $http, $scope) {
     }
     ] 
 
-        for (var i = 0; i < vm.users.length; i++) {
-            arr1.push(vm.users[i].phone);          //pushing phone numbers to an array
+        for (var i = 0; i < $scope.users.length; i++) {
+            arr1.push($scope.users[i].phone);          //pushing phone numbers to an array
         }
-        for (var i = 0; i < vm.users.length; i++) {
+        for (var i = 0; i < $scope.users.length; i++) {
             arr2.push(parseInt(arr1[i].substring(0, 3))); // pushing first 3 digits to an array
         }
         
@@ -254,32 +254,32 @@ function sampleContactCtrl(pocRestangularService, $http, $scope) {
     };
 
     // to post data
-    vm.save = function () {
+    $scope.save = function () {
         var user = {};
         
-        user.api_key = vm.api_key;
-        user.first_name = vm.firstName;
-        user.last_name = vm.lastName;
-        user.email = vm.email;
-        user.phone = vm.phone;
+        user.api_key = $scope.api_key;
+        user.first_name = $scope.firstName;
+        user.last_name = $scope.lastName;
+        user.email = $scope.email;
+        user.phone = $scope.phone;
         $http({method: 'POST',url:'http://hire.lcdevelopment.com/api/user/add', data:user}).then( function (response) {
-            vm.users.push(response.data.user);
+            $scope.users.push(response.data.user);
         })
-        vm.reset();
+        $scope.reset();
     };
     //to delete all the users
-    vm.delete = function () {
+    $scope.delete = function () {
             // $http({method: 'DELETE',url:'http://hire.lcdevelopment.com/api/reset'}).then(function (response){
             // delete response.data.users;
-            delete vm.users;
+            delete $scope.users;
             
     }
     // to clear the form
-    vm.reset = function () {
-        vm.firstName = '';
-        vm.lastName = '';
-        vm.email = '';
-        vm.phone = '';
+    $scope.reset = function () {
+        $scope.firstName = '';
+        $scope.lastName = '';
+        $scope.email = '';
+        $scope.phone = '';
     };
 }
 
