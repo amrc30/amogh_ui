@@ -9,14 +9,35 @@ app.config(function ($urlRouterProvider, $stateProvider) {
 
     .state('home', {
       url: '/home',
-      templateUrl: 'main.html',
+      templateUrl: 'home.html',
       controller: 'sampleCtrl as home',
 
     })
-    .state('contact', {
-      url: '/contact',
-      templateUrl: 'contact-list.html',
+    .state('chart', {
+      url: '/chart?cid',
+      templateUrl: 'chart.html',
       controller: 'sampleContactCtrl'
+      // depends: ['nvd3']
 
     })
+    
+    
 });
+// app.run(function($state, $q) {
+//   $state.dependencyLoaders.push(function(depends) {
+//       var notify = $q.defer();
+//       var toPaths = moduleSpecificMethodToConvertDependsToPaths;
+//       var paths = toPaths(depends);
+
+//       if (!paths || !paths.length) {
+//           // This module doesn't know anything about any of these dependencies
+//           return;
+//       }
+
+//       // Example: use require.js to load dependencies:
+//       require(toPaths(dependency), function() {
+//           notify.resolve();
+//       });
+//       return notify.promise;
+//   });
+// })

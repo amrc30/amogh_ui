@@ -16,48 +16,50 @@
     #sec1 {
       padding-left: 0px;
     }
-    
+
     #msg {
       font-size: 500%;
       text-align: center;
     }
-    
+
     #greet {
       font-size: 300%;
       text-align: center;
     }
-    
+
     #cLink {
       text-align: center;
       display: block;
       font-size: 200%;
-      color:#23527c;
+      color: #23527c;
     }
-    
-   
-    
+
+
+
     #grph2 {
       text-align: center;
     }
-    .bckg{
+
+    .bckg {
       background-image: url('managing-user-roles-permission-drupal-8.jpg');
       background-size: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    overflow: auto;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      overflow: auto;
     }
-    .bckgim{
+
+    .bckgim {
       background-image: url('apple-contacts-icon_183941.png');
       background-size: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    overflow: auto;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      overflow: auto;
     }
   </style>
 
@@ -78,125 +80,44 @@
   <script src='app/home/sampleHomeCtrl.js'></script>
   <script src='app/contact/sampleContactCtrl.js'></script>
 
-  <script type="text/ng-template" id="main.html">
+  <script type="text/ng-template" id="home.html">
   <div class='bckg'> 
- <section class='col-sm-10 col-sm-offset-1'>
-  <div class="row">
-    <div class="col-sm-12">
-      <h1 id='greet'>{{home.greet}}</h1>
+    <div class="container" style="position:absolute;top:35%;left:12%">
+      <div class="row">
+      <table class="table table-bordered table-striped" style="background: white">
+          <thead>
+            <tr>
+              <th>Concept Name</th>
+              <th>Type</th>
+              <th>Unique Values</th>
+              <th>Missing Values</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in items">
+              <td><a ui-sref="chart({cid:item.cid})" style="color:red">{{item.conceptName}}<a></td>
+              <td>{{item.statType}}</td>
+              <td>{{item.uniqueCount}}</td>
+              <td>{{item.nullCount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <h1 id='msg'>{{home.msg}}</h1>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-sm-12">
-      <a id='cLink' ui-sref="contact">My Contacts List</a>
-    </div>
-  </div>
-</section>
-
 </script>
-  <script type="text/ng-template" id="contact-list.html">
-  <div class='bckgim'></div>
+  <script type="text/ng-template" id="chart.html">
 <section class='col-sm-10 col-sm-offset-1'>
-  <div class='row'>
-  <a ui-sref='home'><button class='btn btn-primary'> Back to Home</button></a>
-  </div>
-  <form class="form-horizontal">
-    <div class='row'>
-      <div class="form-group">
-      <h1 class="col-sm-10">Create New Contact</h1>
-      </div>
-    </div>
-  
-  <div class="row">
-    
-      <div class='form-group'>
-        <div class='col-sm-8'>
-           <label for="firstName" class="left inline">First Name</label>
-           <input type="text" class='form-control' id="firstName" placehoder="First Name" ng-model="firstName">
-        </div>
-    </div>
-      <div class='form-group'>
-        <div class="col-sm-8">
-          <label for="lastName" class="left inline">Last Name</label>
-            <input type="text" class='form-control' id="lastName" placehoder="Last Name" ng-model="lastName">
-           </div>
-        </div>
-      <div class='form-group'>
-        <div class="col-sm-8">
-           <label for="email" class="left inline">E-Mail</label>
-           <input type="email"  class='form-control' id="email" placehoder="E-Mail" ng-model="email">
-        </div>
-      </div>
-      <div class='form-group'>
-        <div class="col-sm-8">
-             <label for="phone" class="left inline">Phone</label>
-             <input type="text" class='form-control' id="phone" placehoder="Phone" ng-model="phone">
-        </div>
-    </div>
-    <div class='form-group'>
-        <div class="col-sm-8">
-             <label for="email" class="left inline">Your Email</label>
-             <input type="text" class='form-control' id="urEmail" placehoder="Your Email Id" ng-model="api_key">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-10">
-          <button type="button" class="btn btn-primary" ng-click="save()">Create</button>
-        </div>
-      </div>
-      </div>
-    </div>
-    </div>
-  </form>
-</section>
 
-<section id= 'sec1' class="col-sm-12">
-  <div class="row" ng-if='users.length'>
-    
-    <div class="col-sm-10 col-sm-push-1">
-      <h1>My Contact List</h1>
-    </div>
-  </div>
-  <div class="row" ng-if='users.length'>
-    <div class='col-sm-10 col-sm-offset-1'>
-    <table class='table table-striped'>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Phone Number</th>
-          <th>E-Mail Address</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat='x in users'>
-        <td>{{x.first_name}}</td>
-        <td>{{x.last_name}}</td>
-        <td>{{x.phone}}</td>
-        <td>{{x.email}}</td>
-      </tr>
-      </tbody>
-      
-    </table>
-    <!--<button type='button' class='btn btn-danger' ng-click='hello.delete()'>Reset</button>-->
-    </div>
-  </div>
+<nvd3 options="options" data="data" class="with-3d-shadow with-transitions">
 
-
-<nvd3 ng-if='users.length' options="options" data="data" class="with-3d-shadow with-transitions"></nvd3>
-<nvd3 ng-if='users.length' options="details" data="finalArr" class="with-3d-shadow with-transitions"></nvd3>
+</nvd3>
 
 </section>
 </script>
 
 
-  
+
 
 </head>
 

@@ -1,11 +1,13 @@
 'use strict';
 
-function sampleCtrl() {
-	var vm = this;
+function sampleCtrl($http, $scope) {
+	$scope.jsonurl = '../response.json'
     //greeting and welcome msg
-	vm.greet = 'Hello!';
-	vm.msg = 'Welcome to the sample application';
+$http.get($scope.jsonurl).then(function(response) {
+	$scope.items = response.data;
+	console.log($scope.items)
+})
 }
 
 
-app.controller('sampleCtrl', [sampleCtrl]);
+app.controller('sampleCtrl', ['$http', '$scope', sampleCtrl])

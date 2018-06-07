@@ -1,4 +1,4 @@
 'use strict';
 
 //module registration
-var app = angular.module('sample-ui', ['ngResource', 'ui.router', 'restangular', 'nvd3']);
+var app = angular.module('sample-ui', ['ui.router', 'nvd3'])
